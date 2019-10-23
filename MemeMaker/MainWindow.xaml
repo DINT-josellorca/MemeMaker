@@ -1,0 +1,55 @@
+﻿<Window x:Class="MemeMaker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MemeMaker"
+        mc:Ignorable="d"
+        Title="MemeMaker" Height="800" Width="1300" Icon="lol_emoticon_smiley_cheesy.ico">
+    <Window.Resources>
+        <local:BorderConversor x:Key="borderConversor"></local:BorderConversor>
+        <Style TargetType="TextBlock" x:Key="textBlockMeme">
+            <Setter Property="FontFamily" Value="Impact"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="FontSize" Value="30"></Setter>
+            <Setter Property="TextAlignment" Value="Center"></Setter>
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" BlurRadius="5"></DropShadowEffect>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <DockPanel> 
+        <Grid  DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" Grid.Column="0">
+                <TextBlock>Texto superior</TextBlock>
+                <TextBlock>Texto inferior</TextBlock>
+                <TextBlock>Alto</TextBlock>
+                <TextBlock>Ancho</TextBlock>
+                <TextBlock>Imagen</TextBlock>
+                <TextBlock>Borde</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Grid.Column="1">
+                <TextBox  x:Name="textoSuperior" Text="Texto superior"></TextBox>
+                <TextBox  x:Name="textoInferior" Text="Texto inferior"></TextBox>
+                <Slider x:Name="altoSlider" Minimum="100" Maximum="1000" Value="500"></Slider>
+                <Slider x:Name="anchoSlider" Minimum="100" Maximum="1000" Value="500"></Slider>
+                <TextBox x:Name="imagenTextBox"></TextBox>
+                <CheckBox x:Name="borderCheckbox"></CheckBox>
+            </StackPanel>
+        </Grid>
+        <Border x:Name="border" Width="{Binding ElementName=anchoSlider, Path=Value}"  Height="{Binding ElementName=altoSlider, Path=Value}" DockPanel.Dock="Bottom" Margin="50,10,50,50" BorderThickness="{Binding ElementName=borderCheckbox, Path=IsChecked,Converter={StaticResource borderConversor}}" BorderBrush="Black">
+            <Grid  Background="#FFFFD5DC">
+                <Image Source="{Binding ElementName=imagenTextBox, Path=Text}"  Stretch="Fill"></Image>
+                <TextBlock VerticalAlignment="Top" Text="{Binding ElementName=textoSuperior, Path=Text}" Style="{StaticResource textBlockMeme}"></TextBlock>
+                <TextBlock VerticalAlignment="Bottom" Text="{Binding ElementName=textoInferior, Path=Text}" Style="{StaticResource textBlockMeme}"></TextBlock>
+            </Grid>
+        </Border>
+    </DockPanel>
+</Window>
